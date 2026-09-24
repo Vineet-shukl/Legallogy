@@ -34,7 +34,7 @@ export interface Clause {
   explanation: string;
   practicalImpact: string;
   suggestedRevision: string;
-  category: 'Non-Compete' | 'Termination' | 'Liability' | 'Deposit/Payment' | 'IP Rights' | 'Arbitration' | 'Data Privacy' | 'General';
+  category: 'Non-Compete' | 'Termination' | 'Liability' | 'Deposit/Payment' | 'IP Rights' | 'Arbitration' | 'Data Privacy' | 'General' | 'Dispute Resolution' | 'Confidentiality';
 }
 
 export interface LegalDiffItem {

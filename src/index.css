@@ -5,6 +5,7 @@
   --font-display: "Cinzel", Georgia, serif;
   --font-sans: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-mono: "JetBrains Mono", monospace;
+  --font-devanagari: "Noto Sans Devanagari", "Plus Jakarta Sans", sans-serif;
 
   --color-obsidian-950: #030712;
   --color-obsidian-900: #050a15;
@@ -20,14 +21,29 @@
 }
 
 @layer base {
+  html {
+    /* Improve tap responsiveness on mobile */
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+  }
   body {
     font-family: "Plus Jakarta Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
     background-color: #050a15;
-    color: #f1f5f9;
+    color: #e2e8f0;
+    font-size: 15px;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Prevent horizontal overflow on all pages */
+  * {
+    box-sizing: border-box;
+    min-width: 0;
   }
 }
 
-/* Custom subtle scrollbar */
+/* ─── Custom Scrollbar (Desktop) ─────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
   height: 6px;
@@ -43,16 +59,28 @@
   background: #334155;
 }
 
+/* ─── Hide scrollbar (no-scrollbar utility) ──────────────────────────────── */
+.no-scrollbar {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+/* ─── Brand Gradients ────────────────────────────────────────────────────── */
 .gold-gradient-text {
   background: linear-gradient(135deg, #FFF6D6 0%, #D4AF37 50%, #AA820A 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .gold-glow {
   box-shadow: 0 0 35px -5px rgba(212, 175, 55, 0.18);
 }
 
+/* ─── Glass Panels ───────────────────────────────────────────────────────── */
 .glass-panel {
   background: rgba(13, 24, 48, 0.75);
   backdrop-filter: blur(16px);
@@ -65,6 +93,48 @@
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
+/* ─── Legal Typography — Readable Text Utilities ─────────────────────────── */
+
+/* Primary legal body — clause text, explanations (15px / 28px lh) */
+.legal-text-body {
+  font-size: 0.9375rem;     /* 15px */
+  line-height: 1.875rem;    /* 30px */
+  color: #cbd5e1;           /* slate-300 */
+}
+
+/* Original clause text — italic serif (14px / 26px lh) */
+.legal-text-clause {
+  font-size: 0.875rem;      /* 14px */
+  line-height: 1.75rem;     /* 28px */
+  font-style: italic;
+  font-family: "Playfair Display", Georgia, serif;
+  color: #cbd5e1;
+}
+
+/* Hindi / Devanagari — needs extra font size + line height */
+.legal-hindi-text {
+  font-family: "Noto Sans Devanagari", "Plus Jakarta Sans", sans-serif;
+  font-size: 1.0625rem;     /* 17px */
+  line-height: 2.125rem;    /* 34px */
+  color: #e2e8f0;
+}
+
+/* Counter-clause monospace — slightly smaller but still readable */
+.legal-counter-clause {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.8125rem;     /* 13px */
+  line-height: 1.625rem;    /* 26px */
+  color: #86efac;           /* emerald-300 */
+}
+
+/* Statutory badge — keep compact */
+.statutory-badge {
+  font-family: "JetBrains Mono", monospace;
+  font-size: 0.6875rem;     /* 11px */
+  letter-spacing: 0.02em;
+}
+
+/* ─── Animations ─────────────────────────────────────────────────────────── */
 @keyframes pulse-subtle {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.6; }
@@ -72,4 +142,17 @@
 
 .animate-pulse-subtle {
   animation: pulse-subtle 3s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+/* ─── Mobile Tap Targets ─────────────────────────────────────────────────── */
+/* Ensure all interactive elements meet 44px minimum touch target */
+@media (max-width: 1023px) {
+  button, [role="button"], label[for], a {
+    min-height: 2.75rem; /* 44px */
+  }
+
+  /* But allow small inline badges to skip this */
+  .badge-compact {
+    min-height: unset;
+  }
 }

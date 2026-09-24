@@ -80,6 +80,16 @@ export const INDIAN_STATUTES = {
     landmarkPrecedent: 'Nandganj Sihori Sugar Co. Ltd. v. Badri Nath Dixit (1991)',
     summary: 'Courts in India will not grant specific performance of contracts of personal service (e.g. forcing an employee to work against their will or enforcing an employment bond by compelling service).',
     riskCategory: 'Void Agreement'
+  } as StatutoryCitation,
+
+  // Alias for Section 12(5) reference used in NDA sample
+  ARBITRATION_SECTION_12: {
+    act: 'Arbitration and Conciliation Act, 1996',
+    section: 'Section 12(5) & Seventh Schedule',
+    title: 'Ineligibility of Interested Arbitrator / Unilateral Appointment Void',
+    landmarkPrecedent: 'Perkins Eastman Architects DPC v. HSCC (India) Ltd. (2020) 20 SCC 760; TRF Ltd. (2017)',
+    summary: 'A party that has an interest in the outcome of a dispute is statutorily ineligible to act as sole arbitrator or unilaterally appoint a sole arbitrator. Such arbitration clauses are legally unenforceable.',
+    riskCategory: 'Unilateral Power'
   } as StatutoryCitation
 };
 

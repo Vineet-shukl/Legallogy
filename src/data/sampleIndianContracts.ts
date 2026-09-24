@@ -464,5 +464,155 @@ export const SAMPLE_CONTRACTS: ContractAnalysis[] = [
         'Issue a formal legal notice under Section 8 of the Insolvency and Bankruptcy Code (if applicable) or summary civil recovery suit.'
       ]
     }
+  },
+
+  // ─── 4th Sample: NDA with Excessive Non-Compete ───────────────────────────
+  {
+    id: 'mumbai-nda-nondisclosure',
+    title: 'Mumbai Startup NDA — Non-Disclosure & Non-Compete Agreement',
+    documentType: 'nda',
+    partiesInvolved: {
+      partyA: 'Zephyr Innovations Private Limited (Mumbai, Disclosing Party)',
+      partyB: 'Priya Mehta (Receiving Party / Senior Product Manager)'
+    },
+    fairnessScore: 33,
+    overallSummary: 'This NDA contains multiple critical infirmities under Indian law: a perpetual confidentiality obligation with no sunset clause, a 3-year post-employment non-compete across all of India (void under Section 27 ICA), a clause waiving the right to seek injunctive relief from Indian courts (void under Section 28 ICA), and an overbroad definition of "Confidential Information" that could encompass publicly known industry knowledge.',
+    hindiSummary: 'यह गोपनीयता समझौता (NDA) कई भारतीय कानूनी समस्याओं से ग्रस्त है: कोई समाप्ति तिथि नहीं (आजीवन गोपनीयता), 3 साल का पूरे भारत में नौकरी प्रतिबंध (ICA धारा 27 के तहत शून्य), और न्यायालय से न्याय मांगने के अधिकार का त्याग (ICA धारा 28 के तहत अमान्य)।',
+    executiveSummary: 'CRITICAL VIOLATIONS: 1) Clause 5 imposes a 3-year post-relationship non-compete across all of India (Void under Sec 27 ICA — Percept D\'Mark v. Zaheer Khan). 2) Clause 8 waives right to approach Indian courts for interim injunctions (Void under Sec 28 ICA). 3) Clause 3 defines Confidential Information so broadly it includes publicly available market research and common industry knowledge. 4) No limitation period on confidentiality obligation — Indian courts routinely reject perpetual NDAs as unconscionable.',
+    clauses: [
+      {
+        id: 'nda-cl-1',
+        clauseNumber: 'Clause 5.1 & 5.2',
+        title: 'Post-Relationship Non-Compete & Non-Solicitation',
+        originalText: 'For a period of three (3) years following the termination or expiry of this Agreement, the Receiving Party shall not, directly or indirectly, (i) engage in, invest in, advise, or otherwise assist any business or enterprise that develops, markets, or sells products or services competitive with the Company\'s current or future product pipeline anywhere in the territory of India; (ii) solicit, recruit, or hire any employee or contractor of the Company.',
+        simplifiedText: 'For 3 years after the NDA ends, you cannot join any competing company anywhere in India, and you cannot hire anyone from this company\'s team — even if you go independent.',
+        hindiText: '3 साल तक भारत में किसी भी प्रतिस्पर्धी कंपनी में काम नहीं कर सकते, और कंपनी के किसी भी कर्मचारी को अपनी टीम में नहीं ले सकते।',
+        executiveSummary: '3-year pan-India post-agreement non-compete covenant.',
+        riskLevel: 'high',
+        riskScore: 97,
+        statutoryViolations: [INDIAN_STATUTES.ICA_SECTION_27, INDIAN_STATUTES.ICA_SECTION_23],
+        explanation: 'Section 27 of the Indian Contract Act, 1872 renders any agreement restraining trade void ab initio. In Percept D\'Mark v. Zaheer Khan (2006) 4 SCC 227, the Supreme Court held that post-contractual non-compete restrictions are completely unenforceable in India irrespective of reasonableness. A 3-year restriction across all of India is especially egregious. Indian courts will not grant an injunction under the Specific Relief Act, 1963 to enforce personal service non-compete covenants.',
+        practicalImpact: 'This clause is legally unenforceable. However, unscrupulous employers use it to intimidate employees. You can freely join competitors — Indian courts have consistently refused to enforce post-employment non-competes since the 2006 Supreme Court ruling.',
+        suggestedRevision: 'Replace with a reasonable 12-month non-solicitation of existing clients the employee personally serviced, combined with a strict confidentiality obligation of 3 years specifically limited to genuinely proprietary trade secrets.',
+        category: 'Non-Compete'
+      },
+      {
+        id: 'nda-cl-2',
+        clauseNumber: 'Clause 8.3',
+        title: 'Waiver of Right to Approach Indian Courts',
+        originalText: 'In the event of any dispute, controversy, or claim arising out of or relating to this Agreement or the breach thereof, the Parties agree that such dispute shall be exclusively resolved by arbitration in Singapore under SIAC Rules and that neither Party shall approach any court of competent jurisdiction in India for interim relief, injunctions, or any other equitable relief whatsoever.',
+        simplifiedText: 'You cannot go to an Indian court even for emergency injunctions. All disputes must go to arbitration in Singapore — an expensive and impractical remedy for an individual Product Manager.',
+        hindiText: 'किसी भी विवाद के लिए आप भारतीय न्यायालय में नहीं जा सकते — सभी मामले सिंगापुर में मध्यस्थता (Arbitration) के द्वारा सुलझाने होंगे।',
+        executiveSummary: 'Complete ouster of Indian court jurisdiction for interim relief.',
+        riskLevel: 'high',
+        riskScore: 88,
+        statutoryViolations: [INDIAN_STATUTES.ICA_SECTION_28, INDIAN_STATUTES.ARBITRATION_SECTION_12],
+        explanation: 'Section 28 of the Indian Contract Act makes void any agreement that restricts the absolute right of any party to enforce their contractual rights through court proceedings. Specifically, the Supreme Court in A v. B (2007) clarified that Section 9 of the Arbitration & Conciliation Act, 1996 preserves the right of Indian parties to seek interim relief from Indian courts even during ongoing foreign arbitration. This waiver is entirely void under Indian law.',
+        practicalImpact: 'Even with this clause, you retain the legal right to approach Indian courts for emergency injunctions under Section 9 of the Arbitration Act. Enforcement of a SIAC award against Indian assets can take 3-7 years through Indian courts.',
+        suggestedRevision: 'Disputes may be referred to arbitration at Mumbai under the Mumbai Centre for International Arbitration (MCIA) Rules, with a neutral sole arbitrator appointed by mutual agreement. Each Party retains the right to seek urgent interim relief from competent Indian courts.',
+        category: 'Dispute Resolution'
+      },
+      {
+        id: 'nda-cl-3',
+        clauseNumber: 'Clause 3.1',
+        title: 'Overbroad Definition of Confidential Information',
+        originalText: 'For purposes of this Agreement, "Confidential Information" means any and all information, data, know-how, ideas, concepts, product roadmaps, customer lists, financial data, technical specifications, business strategies, market research, pricing information, and any other information disclosed by the Disclosing Party to the Receiving Party, whether in written, electronic, oral, or any other form, regardless of whether it has been specifically marked as "Confidential".',
+        simplifiedText: 'Anything you ever learn or hear from the company — including in casual conversations — is considered confidential. Even publicly available market research counts if it\'s passed through the company\'s systems.',
+        hindiText: 'कंपनी से आपको मिली हर जानकारी — बोली गई हो या लिखित — गोपनीय मानी जाएगी, भले ही वह पहले से सार्वजनिक हो।',
+        executiveSummary: 'Boundlessly broad confidentiality scope including publicly known information.',
+        riskLevel: 'medium',
+        riskScore: 71,
+        statutoryViolations: [INDIAN_STATUTES.ICA_SECTION_23],
+        explanation: 'Courts in India (following UK precedents on which ICA is modelled) have held that confidentiality obligations must be limited to genuinely proprietary information not otherwise in the public domain. A definition capturing all "orally communicated" information without a follow-up written confirmation requirement is practically unworkable and courts will read down such clauses. Under Section 23 ICA, unconscionable contractual terms against public policy are void.',
+        practicalImpact: 'Common industry knowledge, skills you developed independently, or information you already knew before joining cannot be protected under trade secret law even if this clause claims otherwise.',
+        suggestedRevision: '"Confidential Information" means specifically identified proprietary trade secrets, customer lists, and unpublished financial projections explicitly marked as "CONFIDENTIAL" at the time of disclosure, and excludes: (a) information in the public domain; (b) independently developed by Receiving Party; (c) received from a third party lawfully.',
+        category: 'Confidentiality'
+      },
+      {
+        id: 'nda-cl-4',
+        clauseNumber: 'Clause 9.1',
+        title: 'Perpetual Confidentiality — No Sunset Clause',
+        originalText: 'The obligations of confidentiality and non-disclosure set forth in this Agreement shall survive the termination or expiry of this Agreement and shall remain in full force and effect in perpetuity, without any limitation of time, for so long as the Confidential Information retains any commercial value.',
+        simplifiedText: 'Your confidentiality obligation has NO end date — it lasts forever, or as long as the company says the information has commercial value (which they decide unilaterally).',
+        hindiText: 'इस समझौते में गोपनीयता की कोई अंतिम तिथि नहीं है — यह जीवन भर लागू रह सकती है।',
+        executiveSummary: 'Unlimited perpetual confidentiality obligation with no termination date.',
+        riskLevel: 'medium',
+        riskScore: 65,
+        statutoryViolations: [INDIAN_STATUTES.ICA_SECTION_23],
+        explanation: 'Indian courts have consistently refused to enforce perpetual restraints on trade and information sharing, particularly where the "commercial value" determination is vested unilaterally in one party. A perpetual NDA with no sunset creates an unreasonable burden and has been characterised as unconscionable under Central Inland Water Transport Corp v. Brojo Nath Ganguly (1986).',
+        practicalImpact: 'Courts will typically read down the perpetual obligation to a reasonable period (3-5 years for genuine trade secrets) and will not enforce obligations regarding information that has entered the public domain.',
+        suggestedRevision: 'Confidentiality obligations for trade secrets shall survive for five (5) years following termination. Obligations for specific customer data shall expire upon public disclosure or become unenforceable once the information enters the public domain from an independent source.',
+        category: 'Confidentiality'
+      }
+    ],
+    keyRisks: [
+      'Non-compete clause (Clause 5) is void under Section 27 ICA — Percept D\'Mark (2006)',
+      'Court waiver clause (Clause 8) is void under Section 28 ICA — cannot oust Indian courts',
+      'SIAC Singapore arbitration is prohibitively expensive for an individual employee',
+      'Perpetual confidentiality with no time limit is unconscionable under Section 23 ICA',
+      'Overbroad confidentiality definition could trap industry-common knowledge'
+    ],
+    keyObligations: [],
+    counterProposals: [],
+    diffComparison: [
+      {
+        id: 'diff-nda-1',
+        clauseTitle: 'Post-Employment Non-Compete',
+        type: 'removed',
+        originalClause: 'For 36 months, Employee shall not directly or indirectly work for any competitor.',
+        comparedClause: 'Employee agrees not to solicit or poach current clients or employees of the Company for a period of 12 months post-termination.',
+        changeSummary: 'Replaced void non-compete with enforceable non-solicitation.',
+        legalImpact: 'Complies with Section 27, Indian Contract Act.',
+        riskShift: 'decreased'
+      }
+    ],
+    advocateBrief: {
+      documentTitle: 'Mumbai Startup NDA — Non-Disclosure & Non-Compete Agreement',
+      documentType: 'nda' as const,
+      jurisdiction: 'Republic of India (Maharashtra jurisdiction)',
+      dateGenerated: new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' }),
+      overallFairnessScore: 33,
+      executiveSummary: 'This NDA contains a 3-year pan-India non-compete (void under §27 ICA), a waiver of Indian court access (void under §28 ICA), perpetual confidentiality with no sunset, and an overbroad definition capturing publicly known information. None of these terms are enforceable in Indian courts.',
+      criticalRedFlags: [
+        {
+          clauseTitle: 'Post-Relationship Non-Compete (Clause 5.1 & 5.2)',
+          issue: '3-year pan-India non-compete — completely void under Indian law',
+          statutoryConflict: 'Section 27, Indian Contract Act, 1872 — Percept D\'Mark v. Zaheer Khan (2006) 4 SCC 227'
+        },
+        {
+          clauseTitle: 'Waiver of Indian Court Access (Clause 8.3)',
+          issue: 'Attempts to bar you from approaching Indian courts for emergency injunctions',
+          statutoryConflict: 'Section 28, Indian Contract Act, 1872 — void agreement restraining legal proceedings'
+        },
+        {
+          clauseTitle: 'Perpetual Confidentiality (Clause 9.1)',
+          issue: 'No sunset clause — obligation purports to last "in perpetuity"',
+          statutoryConflict: 'Section 23, ICA — unconscionable term; Central Inland Water Transport (1986)'
+        },
+        {
+          clauseTitle: 'Overbroad Confidential Information (Clause 3.1)',
+          issue: 'Captures all oral communications and publicly available market research',
+          statutoryConflict: 'Section 23 ICA — unreasonable burden on receiving party'
+        }
+      ],
+      keyQuestionsToAskAdvocate: [
+        'If I sign this NDA and then join a competitor, can the company actually get an injunction preventing me from working?',
+        'Can I still file in an Indian court for unpaid dues even with the Singapore arbitration clause?',
+        'How do I protect my own pre-existing industry knowledge when signing an overbroad NDA?',
+        'What is a reasonable confidentiality period for product roadmap information in India?'
+      ],
+      documentsAndEvidenceToBring: [
+        'Signed or unsigned NDA document',
+        'Any previous NDAs signed with former employers for comparison',
+        'Your employment offer letter (to check if it cross-references this NDA)',
+        'List of any proprietary information / personal side-projects you want to carve out'
+      ],
+      suggestedLegalRemedies: [
+        'Negotiate a carve-out schedule listing your pre-existing knowledge not subject to confidentiality.',
+        'Insist on a written return/destruction of Confidential Information clause upon termination.',
+        'Add a mutual NDA component — if company shares your information with investors, you retain reciprocal protections.'
+      ]
+    }
   }
 ];
+
