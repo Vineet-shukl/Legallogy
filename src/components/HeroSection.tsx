@@ -14,7 +14,7 @@ import type { ContractAnalysis } from '../types/legal';
 
 interface HeroSectionProps {
   onSelectSample: (contract: ContractAnalysis) => void;
-  onCustomTextAnalyze: (text: string, title: string) => void;
+  onCustomTextAnalyze: (text: string, title: string, fileData?: { mimeType: string; data: string }) => void;
   isLoading: boolean;
 }
 
@@ -31,14 +31,32 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     const file = e.target.files?.[0];
     if (!file) return;
 
-    const reader = new FileReader();
-    reader.onload = (event) => {
-      const content = event.target?.result as string;
-      if (content) {
-        onCustomTextAnalyze(content, file.name.replace(/\.[^/.]+$/, ''));
-      }
-    };
-    reader.readAsText(file);
+    const validTextTypes = ['text/plain', 'text/markdown'];
+    const validBinaryTypes = ['application/pdf', 'image/png', 'image/jpeg', 'image/webp'];
+
+    if (validTextTypes.includes(file.type) || file.name.endsWith('.md') || file.name.endsWith('.txt')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const content = event.target?.result as string;
+        if (content) {
+          onCustomTextAnalyze(content, file.name.replace(/\.[^/.]+$/, ''));
+        }
+      };
+      reader.readAsText(file);
+    } else if (validBinaryTypes.includes(file.type) || file.name.endsWith('.pdf')) {
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const base64Url = event.target?.result as string;
+        const base64Data = base64Url.split(',')[1];
+        if (base64Data) {
+          onCustomTextAnalyze('', file.name.replace(/\.[^/.]+$/, ''), { mimeType: file.type || 'application/pdf', data: base64Data });
+        }
+      };
+      reader.readAsDataURL(file);
+    } else {
+      alert("Unsupported file type. Please upload a PDF, image, or text file.");
+    }
+    
     // Reset input so same file can be re-selected
     e.target.value = '';
   };
@@ -98,10 +116,10 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
             <div className="flex flex-wrap items-center gap-3">
               <label className={`cursor-pointer flex items-center gap-2 px-5 py-3 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 hover:from-amber-400 hover:to-amber-500 text-slate-950 font-semibold text-sm transition-all shadow-lg shadow-amber-500/20 active:scale-95 ${isLoading ? 'opacity-60 pointer-events-none' : ''}`}>
                 <Upload className="w-4 h-4 shrink-0" />
-                <span>Upload .txt / .md</span>
+                <span>Upload PDF/Img/Txt</span>
                 <input 
                   type="file" 
-                  accept=".txt,.md,.doc" 
+                  accept=".txt,.md,.pdf,.png,.jpg,.jpeg,.webp" 
                   onChange={handleFileUpload} 
                   className="hidden" 
                   disabled={isLoading}

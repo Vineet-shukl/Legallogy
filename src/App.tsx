@@ -32,10 +32,10 @@ export function App() {
     }
   };
 
-  const handleCustomTextAnalyze = async (text: string, title: string) => {
+  const handleCustomTextAnalyze = async (text: string, title: string, fileData?: { mimeType: string; data: string }) => {
     setIsAnalyzing(true);
     try {
-      const result = await analyzeLegalDocument(text, title, apiKey);
+      const result = await analyzeLegalDocument(text, title, apiKey, fileData);
       setCurrentContract(result);
       setSelectedClause(result.clauses[0] || null);
       setMobilePaneTab('document');

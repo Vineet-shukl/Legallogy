@@ -49,14 +49,30 @@ DISCLAIMER: Always remember you provide legal information and analytical assista
 /**
  * Calls Gemini 2.5 Flash API via REST
  */
-async function callGeminiApi(prompt: string, apiKey: string, responseJson: boolean = false): Promise<string> {
+async function callGeminiApi(
+  prompt: string, 
+  apiKey: string, 
+  responseJson: boolean = false, 
+  fileData?: { mimeType: string; data: string }
+): Promise<string> {
   const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${encodeURIComponent(apiKey)}`;
+
+  const parts: any[] = [];
+  if (fileData) {
+    parts.push({
+      inlineData: {
+        mimeType: fileData.mimeType,
+        data: fileData.data
+      }
+    });
+  }
+  parts.push({ text: prompt });
 
   const body: any = {
     contents: [
       {
         role: 'user',
-        parts: [{ text: prompt }]
+        parts: parts
       }
     ],
     systemInstruction: {
@@ -98,7 +114,8 @@ async function callGeminiApi(prompt: string, apiKey: string, responseJson: boole
 export async function analyzeLegalDocument(
   text: string, 
   title: string = 'Uploaded Legal Document', 
-  customApiKey?: string
+  customApiKey?: string,
+  fileData?: { mimeType: string; data: string }
 ): Promise<ContractAnalysis> {
   const apiKey = customApiKey || getStoredApiKey();
 
@@ -122,10 +139,7 @@ export async function analyzeLegalDocument(
   const prompt = `
 Please analyze the following legal document under the laws of the Republic of India.
 Document Title: "${title}"
-Document Text:
-"""
-${text.slice(0, 30000)}
-"""
+${fileData ? 'The document is provided as an attached file/image. Please extract the text and analyze it.' : `Document Text:\n"""\n${text.slice(0, 30000)}\n"""`}
 
 Return a comprehensive JSON object strictly adhering to this format:
 {
@@ -203,7 +217,7 @@ Return a comprehensive JSON object strictly adhering to this format:
 `;
 
   try {
-    const rawJson = await callGeminiApi(prompt, apiKey, true);
+    const rawJson = await callGeminiApi(prompt, apiKey, true, fileData);
     const parsed = JSON.parse(rawJson);
     return parsed as ContractAnalysis;
   } catch (error) {
