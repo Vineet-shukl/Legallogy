@@ -1,0 +1,17 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Legallogy document sessions and cached AI analysis
+    match /documents/{documentId} {
+      allow read, write: if true;
+    }
+    match /analyses/{analysisId} {
+      allow read, write: if true;
+    }
+    match /feedback/{feedbackId} {
+      allow create: if true;
+      allow read: if false;
+    }
+  }
+}
